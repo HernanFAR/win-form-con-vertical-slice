@@ -102,6 +102,14 @@ namespace Logica.Funcionalidades.Preguntas.ActualizarPregunta
 
             var pregunta = respuesta.Valor;
 
+            if (pregunta.Respondida)
+            {
+                return new ErrorDeNegocio(
+                    TipoDeError.ErrorDeLogica,
+                    "No puedes editar una pregunta que ya ha sido respondida"
+                );
+            }
+
             pregunta.Editar(request.Titulo, request.Detalle);
 
             return await _repositorio.Actualizar(pregunta, cancellationToken);

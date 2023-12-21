@@ -1,4 +1,5 @@
 ﻿using Logica.Funcionalidades.Preguntas.ActualizarPregunta;
+using Logica.Funcionalidades.Preguntas.BorrarPregunta;
 using Logica.Funcionalidades.Preguntas.CrearPregunta;
 using Logica.Funcionalidades.Preguntas.LeerPreguntas;
 
@@ -16,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             LeerPreguntasGestionDependencias.RegistrarDependencias(servicios);
             CrearPreguntaGestionDependencias.RegistrarDependencias(servicios);
             ActualizarPreguntaGestionDependencias.RegistrarDependencias(servicios);
+            BorrarPreguntaGestionDependencias.RegistrarDependencias(servicios);
 
             return servicios;
         }

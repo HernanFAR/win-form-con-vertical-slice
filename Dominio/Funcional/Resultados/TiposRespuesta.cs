@@ -6,7 +6,7 @@ namespace Dominio.Funcional.Resultados
     {
         RecursoNoEncontrado,
         ErrorDeValidation,
-        Desconocido
+        ErrorDeLogica
     }
 
     public readonly struct MensajeDeValidacion
@@ -33,6 +33,9 @@ namespace Dominio.Funcional.Resultados
             Mensaje = mensaje;
             MensajesDeValidacion = mensajesDeValidacion;
         }
+
+        public ErrorDeNegocio(TipoDeError tipo, string mensaje)
+            : this(tipo, mensaje, Array.Empty<MensajeDeValidacion>()) { }
 
         public ErrorDeNegocio(TipoDeError tipo) 
             : this(tipo, string.Empty, Array.Empty<MensajeDeValidacion>()) { }

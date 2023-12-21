@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Logica.Funcionalidades.Preguntas.BorrarPregunta;
 using WinFormsSample.Herramientas;
 
 namespace WinFormsSample
@@ -135,7 +136,7 @@ namespace WinFormsSample
                     DetallarPregunta(e.RowIndex);
                     break;
                 case 4:
-                    MessageBox.Show("Botón borrar clickeado en: " + e.RowIndex);
+                    BorrarPregunta(e.RowIndex);
                     break;
                 case 5:
                     MessageBox.Show("Botón resolver clickeado en: " + e.RowIndex);
@@ -164,7 +165,7 @@ namespace WinFormsSample
 
             foreach (var pregunta in _preguntas)
             {
-                var textoResolver = pregunta.Resuelta ? "Resolver" : "Ya resuelta";
+                var textoResolver = pregunta.Resuelta ? "Ya resuelta" : "Resolver";
 
                 preguntasGrid.Rows.Add(
                     pregunta.Id,
@@ -231,6 +232,18 @@ namespace WinFormsSample
                 return;
             }
 
+            var result = MessageBox.Show(
+                "¿Seguro que quieres borrar esta pregunta?",
+                "Confirmación",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information
+            );
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
             var respuesta = await _sender.Send(_actualizarPreguntaComando);
 
             if (respuesta.Exito)
@@ -274,6 +287,18 @@ namespace WinFormsSample
                 return;
             }
 
+            var result = MessageBox.Show(
+                "¿Seguro que quieres borrar esta pregunta?",
+                "Confirmación",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information
+            );
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
             var respuesta = await _sender.Send(_crearPreguntaComando);
 
             if (respuesta.Exito)
@@ -301,6 +326,46 @@ namespace WinFormsSample
             {
                 await ValidarModoCreacion();
             }
+        }
+
+        private async Task BorrarPregunta(int rowId)
+        {
+            var result = MessageBox.Show(
+                "¿Seguro que quieres borrar esta pregunta?",
+                "Confirmación",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information
+            );
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            var pregunta = _preguntas[rowId];
+
+            var respuesta = await _sender.Send(new BorrarPreguntaComando(pregunta.Id));
+
+            if (respuesta.Exito)
+            {
+                MessageBox.Show(
+                    "Se borro correctamente la pregunta",
+                    "Exito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                await CargarPreguntas();
+
+                return;
+            }
+
+            MessageBox.Show(
+                respuesta.ErrorDeNegocio.Mensaje,
+                "Error borrando pregunta",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
     }
 }
