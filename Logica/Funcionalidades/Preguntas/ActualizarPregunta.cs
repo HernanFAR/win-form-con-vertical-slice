@@ -106,7 +106,7 @@ namespace Logica.Funcionalidades.Preguntas.ActualizarPregunta
             {
                 return new ErrorDeNegocio(
                     TipoDeError.ErrorDeLogica,
-                    "No puedes editar una pregunta que ya ha sido respondida"
+                    "No puedes editar una pregunta que ya ha sido resuelta"
                 );
             }
 
@@ -136,14 +136,13 @@ namespace Logica.Funcionalidades.Preguntas.ActualizarPregunta
 
         public async Task<Respuesta<Pregunta>> Buscar(Guid id, CancellationToken cancellationToken)
         {
-            var anon = await _context.Preguntas
+            var pregunta = await _context.Preguntas
                 .Where(x => x.Id == id)
-                .Select(x => new { x.Id, x.Titulo, x.Detalle })
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if (anon == null) return new ErrorDeNegocio(TipoDeError.RecursoNoEncontrado);
+            if (pregunta == null) return new ErrorDeNegocio(TipoDeError.RecursoNoEncontrado);
 
-            return new Pregunta(anon.Id, anon.Titulo, anon.Detalle);
+            return pregunta;
         }
 
         public async Task<Respuesta<Exito>> Actualizar(Pregunta pregunta, CancellationToken cancellationToken)

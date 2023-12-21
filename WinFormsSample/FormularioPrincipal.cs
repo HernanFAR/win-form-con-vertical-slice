@@ -1,14 +1,15 @@
 ﻿using Dominio.Funcional.Resultados;
 using FluentValidation;
 using Logica.Funcionalidades.Preguntas.ActualizarPregunta;
+using Logica.Funcionalidades.Preguntas.BorrarPregunta;
 using Logica.Funcionalidades.Preguntas.CrearPregunta;
 using Logica.Funcionalidades.Preguntas.LeerPreguntas;
+using Logica.Funcionalidades.Preguntas.MarcarPreguntaComoResuelta;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Logica.Funcionalidades.Preguntas.BorrarPregunta;
 using WinFormsSample.Herramientas;
 
 namespace WinFormsSample
@@ -136,10 +137,10 @@ namespace WinFormsSample
                     DetallarPregunta(e.RowIndex);
                     break;
                 case 4:
-                    BorrarPregunta(e.RowIndex);
+                    await BorrarPregunta(e.RowIndex);
                     break;
                 case 5:
-                    MessageBox.Show("Botón resolver clickeado en: " + e.RowIndex);
+                    await MarcarPreguntaComoResuelta(e.RowIndex);
                     break;
             }
         }
@@ -262,7 +263,7 @@ namespace WinFormsSample
 
             MessageBox.Show(
                 respuesta.ErrorDeNegocio.Mensaje,
-                "Error actualizando pregunta",
+                "Error actualizando la pregunta",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
@@ -317,7 +318,7 @@ namespace WinFormsSample
 
             MessageBox.Show(
                 respuesta.ErrorDeNegocio.Mensaje,
-                "Error creando pregunta",
+                "Error creando la pregunta",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
@@ -362,7 +363,59 @@ namespace WinFormsSample
 
             MessageBox.Show(
                 respuesta.ErrorDeNegocio.Mensaje,
-                "Error borrando pregunta",
+                "Error borrando la pregunta",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
+
+        private async Task MarcarPreguntaComoResuelta(int rowId)
+        {
+            var pregunta = _preguntas[rowId];
+
+            if (pregunta.Resuelta)
+            {
+                MessageBox.Show(
+                    "No puedes resolver una pregunta ya resuelta",
+                    "Operación negada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "¿Seguro que quieres macar como resuelta esta pregunta?",
+                "Confirmación",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information
+            );
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            var respuesta = await _sender.Send(new MarcarPreguntaComoResueltaComando(pregunta.Id));
+
+            if (respuesta.Exito)
+            {
+                MessageBox.Show(
+                    "Se marcó correctamente la pregunta",
+                    "Exito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                await CargarPreguntas();
+
+                return;
+            }
+
+            MessageBox.Show(
+                respuesta.ErrorDeNegocio.Mensaje,
+                "Error marcando la pregunta",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );

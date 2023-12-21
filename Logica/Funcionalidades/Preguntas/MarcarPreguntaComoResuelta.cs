@@ -11,38 +11,38 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
-namespace Logica.Funcionalidades.Preguntas.BorrarPregunta
+namespace Logica.Funcionalidades.Preguntas.MarcarPreguntaComoResuelta
 {
-    public class BorrarPreguntaGestionDependencias
+    public class MarcarPreguntaComoResueltaGestionDependencias
     {
         public static IServiceCollection RegistrarDependencias(IServiceCollection servicios)
         {
-            servicios.AddTransient<IBorrarPreguntaRepositorio, BorrarPreguntaRepositorio>();
+            servicios.AddTransient<IMarcarPreguntaComoResueltaRepositorio, MarcarPreguntaComoResueltaRepositorio>();
 
             return servicios;
         }
     }
 
-    public class BorrarPreguntaComando : IRequest<Respuesta<Exito>>
+    public class MarcarPreguntaComoResueltaComando : IRequest<Respuesta<Exito>>
     {
         public Guid Id { get; }
 
-        public BorrarPreguntaComando(Guid Id)
+        public MarcarPreguntaComoResueltaComando(Guid Id)
         {
             this.Id = Id;
         }
     }
 
-    public class BorrarPreguntaManejador : IRequestHandler<BorrarPreguntaComando, Respuesta<Exito>>
+    public class MarcarPreguntaComoResueltaManejador : IRequestHandler<MarcarPreguntaComoResueltaComando, Respuesta<Exito>>
     {
-        private readonly IBorrarPreguntaRepositorio _repositorio;
+        private readonly IMarcarPreguntaComoResueltaRepositorio _repositorio;
 
-        public BorrarPreguntaManejador(IBorrarPreguntaRepositorio repositorio)
+        public MarcarPreguntaComoResueltaManejador(IMarcarPreguntaComoResueltaRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
 
-        public async Task<Respuesta<Exito>> Handle(BorrarPreguntaComando request, CancellationToken cancellationToken)
+        public async Task<Respuesta<Exito>> Handle(MarcarPreguntaComoResueltaComando request, CancellationToken cancellationToken)
         {
             var respuesta = await _repositorio.Buscar(request.Id, cancellationToken);
 
@@ -57,26 +57,28 @@ namespace Logica.Funcionalidades.Preguntas.BorrarPregunta
             {
                 return new ErrorDeNegocio(
                     TipoDeError.ErrorDeLogica,
-                    "No puedes borrar una pregunta que ya ha sido resuelta"
+                    "No puedes resolver una pregunta que ya ha sido resuelta"
                 );
             }
 
-            return await _repositorio.Borrar(pregunta, cancellationToken);
+            pregunta.Resolver();
+
+            return await _repositorio.Actualizar(pregunta, cancellationToken);
         }
     }
 
-    public interface IBorrarPreguntaRepositorio
+    public interface IMarcarPreguntaComoResueltaRepositorio
     {
         Task<Respuesta<Pregunta>> Buscar(Guid id, CancellationToken cancellationToken);
 
-        Task<Respuesta<Exito>> Borrar(Pregunta pregunta, CancellationToken cancellationToken);
+        Task<Respuesta<Exito>> Actualizar(Pregunta pregunta, CancellationToken cancellationToken);
     }
 
-    public class BorrarPreguntaRepositorio : IBorrarPreguntaRepositorio
+    public class MarcarPreguntaComoResueltaRepositorio : IMarcarPreguntaComoResueltaRepositorio
     {
         private readonly AppDbContext _context;
 
-        public BorrarPreguntaRepositorio(AppDbContext context)
+        public MarcarPreguntaComoResueltaRepositorio(AppDbContext context)
         {
             _context = context;
         }
@@ -92,9 +94,9 @@ namespace Logica.Funcionalidades.Preguntas.BorrarPregunta
             return pregunta;
         }
 
-        public async Task<Respuesta<Exito>> Borrar(Pregunta pregunta, CancellationToken cancellationToken)
+        public async Task<Respuesta<Exito>> Actualizar(Pregunta pregunta, CancellationToken cancellationToken)
         {
-            _context.Entry(pregunta).State = EntityState.Deleted;
+            _context.Entry(pregunta).State = EntityState.Modified;
 
             await _context.SaveChangesAsync(cancellationToken);
 

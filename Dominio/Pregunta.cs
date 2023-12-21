@@ -28,7 +28,7 @@ namespace Dominio
             return RespuestasPorDefecto.Exito;
         }
 
-        public Respuesta<Exito> Responder()
+        public Respuesta<Exito> Resolver()
         {
             Respondida = true;
 

@@ -80,7 +80,7 @@
     <Compile Include="Funcionalidades\Preguntas\BorrarPregunta.cs" />
     <Compile Include="Funcionalidades\Preguntas\CrearPregunta.cs" />
     <Compile Include="Funcionalidades\Preguntas\LeerPreguntas.cs" />
-    <Compile Include="Funcionalidades\Preguntas\MarcarPreguntaComoRespondida.cs" />
+    <Compile Include="Funcionalidades\Preguntas\MarcarPreguntaComoResuelta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

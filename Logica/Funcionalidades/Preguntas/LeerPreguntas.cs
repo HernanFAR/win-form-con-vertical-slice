@@ -1,4 +1,5 @@
 ﻿using CorteComun.Funcional.Resultados;
+using Dapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -6,7 +7,6 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Dapper;
 
 // ReSharper disable once CheckNamespace
 namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
@@ -25,11 +25,11 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
     {
         public Guid Id { get; private set; }
 
-        public string Titulo { get; private set;}
+        public string Titulo { get; private set; }
 
-        public string Detalle { get; private set;}
+        public string Detalle { get; private set; }
 
-        public bool Resuelta { get; private set;}
+        public bool Resuelta { get; private set; }
     }
 
     public class LeerPreguntasDTO
@@ -79,7 +79,7 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
 
         public async Task<Respuesta<LeerPreguntasDTO>> LeerTodas(CancellationToken cancellationToken)
         {
-            var preguntas = await _connection.QueryAsync<PreguntaDTO>("SELECT Id,Titulo,Detalle,Respondida FROM Preguntas");
+            var preguntas = await _connection.QueryAsync<PreguntaDTO>("SELECT Id,Titulo,Detalle,Respondida as Resuelta FROM Preguntas");
 
             return new LeerPreguntasDTO(preguntas.ToArray());
         }
