@@ -34,14 +34,17 @@
             this.detalleLabel = new System.Windows.Forms.Label();
             this.detalleRichTextBox = new System.Windows.Forms.RichTextBox();
             this.tituloLabelValidacion = new System.Windows.Forms.Label();
-            this.detailValidacionLabel = new System.Windows.Forms.Label();
+            this.detalleValidacionLabel = new System.Windows.Forms.Label();
             this.preguntasGrid = new System.Windows.Forms.DataGridView();
             this.Identificador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Titulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Detalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Editar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Detallar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Borrar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Resolver = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.crearBoton = new System.Windows.Forms.Button();
+            this.volverBoton = new System.Windows.Forms.Button();
+            this.editarBoton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.preguntasGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +52,7 @@
             // 
             this.principalLabel.AutoSize = true;
             this.principalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.principalLabel.Location = new System.Drawing.Point(260, 9);
+            this.principalLabel.Location = new System.Drawing.Point(278, 9);
             this.principalLabel.Name = "principalLabel";
             this.principalLabel.Size = new System.Drawing.Size(251, 29);
             this.principalLabel.TabIndex = 0;
@@ -67,11 +70,12 @@
             // 
             // tituloTextBox
             // 
-            this.tituloTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tituloTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tituloTextBox.Location = new System.Drawing.Point(31, 75);
             this.tituloTextBox.Name = "tituloTextBox";
-            this.tituloTextBox.Size = new System.Drawing.Size(733, 26);
+            this.tituloTextBox.Size = new System.Drawing.Size(635, 23);
             this.tituloTextBox.TabIndex = 2;
+            this.tituloTextBox.TextChanged += new System.EventHandler(this.ValidarPregunta);
             // 
             // detalleLabel
             // 
@@ -85,11 +89,13 @@
             // 
             // detalleRichTextBox
             // 
+            this.detalleRichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detalleRichTextBox.Location = new System.Drawing.Point(31, 157);
             this.detalleRichTextBox.Name = "detalleRichTextBox";
-            this.detalleRichTextBox.Size = new System.Drawing.Size(733, 96);
+            this.detalleRichTextBox.Size = new System.Drawing.Size(635, 96);
             this.detalleRichTextBox.TabIndex = 4;
             this.detalleRichTextBox.Text = "";
+            this.detalleRichTextBox.TextChanged += new System.EventHandler(this.ValidarPregunta);
             // 
             // tituloLabelValidacion
             // 
@@ -102,16 +108,16 @@
             this.tituloLabelValidacion.Text = "Oculta";
             this.tituloLabelValidacion.Visible = false;
             // 
-            // detailValidacionLabel
+            // detalleValidacionLabel
             // 
-            this.detailValidacionLabel.AutoSize = true;
-            this.detailValidacionLabel.ForeColor = System.Drawing.Color.Red;
-            this.detailValidacionLabel.Location = new System.Drawing.Point(34, 256);
-            this.detailValidacionLabel.Name = "detailValidacionLabel";
-            this.detailValidacionLabel.Size = new System.Drawing.Size(38, 13);
-            this.detailValidacionLabel.TabIndex = 6;
-            this.detailValidacionLabel.Text = "Oculta";
-            this.detailValidacionLabel.Visible = false;
+            this.detalleValidacionLabel.AutoSize = true;
+            this.detalleValidacionLabel.ForeColor = System.Drawing.Color.Red;
+            this.detalleValidacionLabel.Location = new System.Drawing.Point(34, 256);
+            this.detalleValidacionLabel.Name = "detalleValidacionLabel";
+            this.detalleValidacionLabel.Size = new System.Drawing.Size(38, 13);
+            this.detalleValidacionLabel.TabIndex = 6;
+            this.detalleValidacionLabel.Text = "Oculta";
+            this.detalleValidacionLabel.Visible = false;
             // 
             // preguntasGrid
             // 
@@ -122,13 +128,13 @@
             this.Identificador,
             this.Titulo,
             this.Detalle,
-            this.Editar,
+            this.Detallar,
             this.Borrar,
             this.Resolver});
-            this.preguntasGrid.Location = new System.Drawing.Point(31, 288);
+            this.preguntasGrid.Location = new System.Drawing.Point(12, 288);
             this.preguntasGrid.Name = "preguntasGrid";
             this.preguntasGrid.ReadOnly = true;
-            this.preguntasGrid.Size = new System.Drawing.Size(733, 150);
+            this.preguntasGrid.Size = new System.Drawing.Size(776, 150);
             this.preguntasGrid.TabIndex = 7;
             this.preguntasGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClickEnPreguntasGrid);
             // 
@@ -154,13 +160,13 @@
             this.Detalle.ReadOnly = true;
             this.Detalle.Width = 350;
             // 
-            // Editar
+            // Detallar
             // 
-            this.Editar.HeaderText = "Editar";
-            this.Editar.Name = "Editar";
-            this.Editar.ReadOnly = true;
-            this.Editar.Text = "¡Clic!";
-            this.Editar.Width = 60;
+            this.Detallar.HeaderText = "Detallar";
+            this.Detallar.Name = "Detallar";
+            this.Detallar.ReadOnly = true;
+            this.Detallar.Text = "¡Clic!";
+            this.Detallar.Width = 75;
             // 
             // Borrar
             // 
@@ -168,22 +174,60 @@
             this.Borrar.Name = "Borrar";
             this.Borrar.ReadOnly = true;
             this.Borrar.Text = "¡Clic!";
-            this.Borrar.Width = 60;
+            this.Borrar.Width = 75;
             // 
             // Resolver
             // 
             this.Resolver.HeaderText = "Resolver";
             this.Resolver.Name = "Resolver";
             this.Resolver.ReadOnly = true;
-            this.Resolver.Width = 60;
+            this.Resolver.Width = 75;
+            // 
+            // crearBoton
+            // 
+            this.crearBoton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crearBoton.Location = new System.Drawing.Point(689, 121);
+            this.crearBoton.Name = "crearBoton";
+            this.crearBoton.Size = new System.Drawing.Size(75, 89);
+            this.crearBoton.TabIndex = 8;
+            this.crearBoton.Text = "Crear";
+            this.crearBoton.UseVisualStyleBackColor = true;
+            this.crearBoton.Click += new System.EventHandler(this.CrearPregunta);
+            // 
+            // volverBoton
+            // 
+            this.volverBoton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.volverBoton.Location = new System.Drawing.Point(689, 75);
+            this.volverBoton.Name = "volverBoton";
+            this.volverBoton.Size = new System.Drawing.Size(75, 78);
+            this.volverBoton.TabIndex = 9;
+            this.volverBoton.Text = "Volver";
+            this.volverBoton.UseVisualStyleBackColor = true;
+            this.volverBoton.Visible = false;
+            this.volverBoton.Click += new System.EventHandler(this.Volver);
+            // 
+            // editarBoton
+            // 
+            this.editarBoton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editarBoton.Location = new System.Drawing.Point(689, 177);
+            this.editarBoton.Name = "editarBoton";
+            this.editarBoton.Size = new System.Drawing.Size(75, 76);
+            this.editarBoton.TabIndex = 10;
+            this.editarBoton.Text = "Editar";
+            this.editarBoton.UseVisualStyleBackColor = true;
+            this.editarBoton.Visible = false;
+            this.editarBoton.Click += new System.EventHandler(this.EditarPregunta);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.editarBoton);
+            this.Controls.Add(this.volverBoton);
+            this.Controls.Add(this.crearBoton);
             this.Controls.Add(this.preguntasGrid);
-            this.Controls.Add(this.detailValidacionLabel);
+            this.Controls.Add(this.detalleValidacionLabel);
             this.Controls.Add(this.tituloLabelValidacion);
             this.Controls.Add(this.detalleRichTextBox);
             this.Controls.Add(this.detalleLabel);
@@ -207,12 +251,15 @@
         private System.Windows.Forms.Label detalleLabel;
         private System.Windows.Forms.RichTextBox detalleRichTextBox;
         private System.Windows.Forms.Label tituloLabelValidacion;
-        private System.Windows.Forms.Label detailValidacionLabel;
+        private System.Windows.Forms.Label detalleValidacionLabel;
         private System.Windows.Forms.DataGridView preguntasGrid;
+        private System.Windows.Forms.Button crearBoton;
+        private System.Windows.Forms.Button volverBoton;
+        private System.Windows.Forms.Button editarBoton;
         private System.Windows.Forms.DataGridViewTextBoxColumn Identificador;
         private System.Windows.Forms.DataGridViewTextBoxColumn Titulo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Detalle;
-        private System.Windows.Forms.DataGridViewButtonColumn Editar;
+        private System.Windows.Forms.DataGridViewButtonColumn Detallar;
         private System.Windows.Forms.DataGridViewButtonColumn Borrar;
         private System.Windows.Forms.DataGridViewButtonColumn Resolver;
     }

@@ -1,4 +1,5 @@
-﻿using Logica.Funcionalidades.Preguntas.LeerPreguntas;
+﻿using Logica.Funcionalidades.Preguntas.CrearPregunta;
+using Logica.Funcionalidades.Preguntas.LeerPreguntas;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -12,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             LeerPreguntasGestionDependencias.RegistrarDependencias(servicios);
+            CrearPreguntaGestionDependencias.RegistrarDependencias(servicios);
 
             return servicios;
         }
