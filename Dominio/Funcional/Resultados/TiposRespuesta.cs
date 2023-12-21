@@ -1,9 +1,12 @@
-﻿namespace CorteComun.Funcional.Resultados
+﻿using System;
+
+namespace Dominio.Funcional.Resultados
 {
     public enum TipoDeError
     {
         RecursoNoEncontrado,
-        ErrorDeValidation
+        ErrorDeValidation,
+        Desconocido
     }
 
     public readonly struct MensajeDeValidacion
@@ -30,6 +33,9 @@
             Mensaje = mensaje;
             MensajesDeValidacion = mensajesDeValidacion;
         }
+
+        public ErrorDeNegocio(TipoDeError tipo) 
+            : this(tipo, string.Empty, Array.Empty<MensajeDeValidacion>()) { }
     }
 
     public readonly struct Exito

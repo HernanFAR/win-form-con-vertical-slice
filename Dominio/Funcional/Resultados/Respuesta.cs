@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Dominio.Funcional.Resultados;
 
 namespace CorteComun.Funcional.Resultados
 {
@@ -36,7 +37,7 @@ namespace CorteComun.Funcional.Resultados
 
     public static class RespuestasPorDefecto
     {
-        public static readonly Respuesta<Exito> Exito = new Respuesta<Exito>(Resultados.Exito.Valor);
+        public static readonly Respuesta<Exito> Exito = new Respuesta<Exito>(Dominio.Funcional.Resultados.Exito.Valor);
 
         public static Task<Respuesta<Exito>> Tarea => Task.FromResult(Exito);
     }

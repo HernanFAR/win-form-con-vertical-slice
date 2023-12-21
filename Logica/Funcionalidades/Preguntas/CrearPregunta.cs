@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dominio.Funcional.Resultados;
 
 // ReSharper disable once CheckNamespace
 namespace Logica.Funcionalidades.Preguntas.CrearPregunta
@@ -50,7 +51,7 @@ namespace Logica.Funcionalidades.Preguntas.CrearPregunta
                 () =>
                 {
                     RuleFor(x => x.Detalle)
-                        .MinimumLength(10).WithMessage("Debes incluir minimo 5 caracteres");
+                        .MinimumLength(5).WithMessage("Debes incluir minimo 5 caracteres");
                 });
         }
 
@@ -79,7 +80,7 @@ namespace Logica.Funcionalidades.Preguntas.CrearPregunta
             {
                 return new ErrorDeNegocio(
                     TipoDeError.ErrorDeValidation,
-                    "Hay errores de validación en el formulario", 
+                    "Hay errores de validación en el formulario",
                     Array.Empty<MensajeDeValidacion>());
             }
 
