@@ -10,7 +10,9 @@ namespace Dominio
         public string Detalle { get; private set; }
         public bool Respondida { get; private set; }
 
-        public Pregunta(Guid id, string titulo, string detalle)
+        public Pregunta() { }
+
+        public Pregunta(Guid id, string titulo, string detalle) : this()
         {
             Id = id;
             Titulo = titulo;

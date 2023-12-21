@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.1.24\lib\net461\Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -68,10 +65,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfiguration.cs" />
-    <Compile Include="DataAccess\Dapper\AppDatabaseConnection.cs" />
+    <Compile Include="DataAccess\AppDatabaseConnection.cs" />
     <Compile Include="DependenciasCorteComun.cs" />
     <Compile Include="DataAccess\EntityFramework\AppDbContext.cs" />
     <Compile Include="DataAccess\EntityFramework\Relaciones\ConfiguracionTablaPreguntas.cs" />
+    <Compile Include="Migrations\202312211406344_Initial.cs" />
+    <Compile Include="Migrations\202312211406344_Initial.designer.cs">
+      <DependentUpon>202312211406344_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +85,11 @@
       <Project>{EB7B4DF3-2E1A-4792-9A25-F4443EE7E7B8}</Project>
       <Name>Dominio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202312211406344_Initial.resx">
+      <DependentUpon>202312211406344_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

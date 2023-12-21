@@ -3,8 +3,10 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapper;
 
 // ReSharper disable once CheckNamespace
 namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
@@ -21,20 +23,13 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
 
     public class PreguntaDTO
     {
-        public PreguntaDTO(Guid id, string titulo, string detalle, bool resuelta)
-        {
-            Id = id;
-            Titulo = titulo;
-            Detalle = detalle;
-            Resuelta = resuelta;
-        }
+        public Guid Id { get; private set; }
 
-        public Guid Id { get; }
+        public string Titulo { get; private set;}
 
-        public string Titulo { get; }
+        public string Detalle { get; private set;}
 
-        public string Detalle { get; }
-        public bool Resuelta { get; }
+        public bool Resuelta { get; private set;}
     }
 
     public class LeerPreguntasDTO
@@ -84,14 +79,9 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
 
         public async Task<Respuesta<LeerPreguntasDTO>> LeerTodas(CancellationToken cancellationToken)
         {
-            return new LeerPreguntasDTO(new[]
-            {
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 1", "Detalle 1", true),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 2", "Detalle 2", false),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 3", "Detalle 3", true),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 4", "Detalle 4", false),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 5", "Detalle 5", true),
-            });
+            var preguntas = await _connection.QueryAsync<PreguntaDTO>("SELECT Id,Titulo,Detalle,Respondida FROM Preguntas");
+
+            return new LeerPreguntasDTO(preguntas.ToArray());
         }
     }
 }

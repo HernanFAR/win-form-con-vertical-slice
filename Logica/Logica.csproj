@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.24\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="MediatR, Version=12.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
       <HintPath>..\packages\MediatR.12.2.0\lib\netstandard2.0\MediatR.dll</HintPath>
     </Reference>
@@ -63,7 +66,7 @@
     <Compile Include="Funcionalidades\Preguntas\ActualizarPregunta.cs" />
     <Compile Include="Funcionalidades\Preguntas\BorrarPregunta.cs" />
     <Compile Include="Funcionalidades\Preguntas\CrearPregunta.cs" />
-    <Compile Include="Funcionalidades\Preguntas\LeerPregunta.cs" />
+    <Compile Include="Funcionalidades\Preguntas\LeerPreguntas.cs" />
     <Compile Include="Funcionalidades\Preguntas\MarcarPreguntaComoRespondida.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
