@@ -12,7 +12,7 @@ using WinFormsSample.Herramientas;
 
 namespace WinFormsSample
 {
-    public partial class Form1 : Form
+    public partial class FormularioPrincipal : Form
     {
         public static readonly IServiceProvider Proveedor = IniciadorServiceProvider.ProveedorLazy.Value;
 
@@ -23,9 +23,8 @@ namespace WinFormsSample
         private EModo _modo = EModo.Creacion;
         private bool _formularioEditado = true;
         private PreguntaDTO[] _preguntas;
-        private PreguntaDTO _pregunta;
 
-        public Form1()
+        public FormularioPrincipal()
         {
             InitializeComponent();
 
@@ -179,7 +178,6 @@ namespace WinFormsSample
         private void Volver(object sender, EventArgs e)
         {
             _modo = EModo.Creacion;
-            _pregunta = null;
 
             tituloTextBox.Text = "";
             detalleRichTextBox.Text = "";
@@ -199,7 +197,6 @@ namespace WinFormsSample
             var pregunta = _preguntas[rowId];
 
             _modo = EModo.Edicion;
-            _pregunta = pregunta;
 
             crearBoton.Visible = false;
 

@@ -1,6 +1,6 @@
 ﻿namespace WinFormsSample
 {
-    partial class Form1
+    partial class FormularioPrincipal
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -234,7 +234,7 @@
             this.Controls.Add(this.tituloTextBox);
             this.Controls.Add(this.tituloLabel);
             this.Controls.Add(this.principalLabel);
-            this.Name = "Form1";
+            this.Name = "FormularioPrincipal";
             this.Text = "Preguntas";
             this.Load += new System.EventHandler(this.CargarVistaFormulario);
             ((System.ComponentModel.ISupportInitialize)(this.preguntasGrid)).EndInit();
