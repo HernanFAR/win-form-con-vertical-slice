@@ -14,9 +14,10 @@ namespace WinFormsSample
         public Form1()
         {
             InitializeComponent();
+            
         }
 
-        private async void Form1_Load(object sender_, EventArgs e)
+        private async void CargarVistaFormulario(object sender_, EventArgs e)
         {
             var sender = Proveedor.GetRequiredService<ISender>();
 
@@ -33,11 +34,26 @@ namespace WinFormsSample
 
                 return;
             }
-
-            // poblar el preguntasGridView
+            
             foreach (var pregunta in respuesta.Valor.Preguntas)
             {
                 preguntasGrid.Rows.Add(pregunta.Id, pregunta.Titulo, pregunta.Detalle, "Editar", "Borrar", "Resolver");
+            }
+        }
+
+        private void ClickEnPreguntasGrid(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 3:
+                    MessageBox.Show("Botón editar clickeado en: " + e.RowIndex);
+                    break;
+                case 4:
+                    MessageBox.Show("Botón borrar clickeado en: " + e.RowIndex);
+                    break;
+                case 5:
+                    MessageBox.Show("Botón resolver clickeado en: " + e.RowIndex);
+                    break;
             }
         }
     }

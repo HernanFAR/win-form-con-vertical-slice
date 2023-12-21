@@ -17,6 +17,14 @@ namespace Dominio
             Detalle = detalle;
         }
 
+        public Respuesta<Exito> Editar(string titulo, string detalle)
+        {
+            Titulo = titulo;
+            Detalle = detalle;
+
+            return RespuestasPorDefecto.Exito;
+        }
+
         public Respuesta<Exito> Responder()
         {
             Respondida = true;

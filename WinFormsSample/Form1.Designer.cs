@@ -130,6 +130,7 @@
             this.preguntasGrid.ReadOnly = true;
             this.preguntasGrid.Size = new System.Drawing.Size(733, 150);
             this.preguntasGrid.TabIndex = 7;
+            this.preguntasGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClickEnPreguntasGrid);
             // 
             // Identificador
             // 
@@ -191,7 +192,7 @@
             this.Controls.Add(this.principalLabel);
             this.Name = "Form1";
             this.Text = "Preguntas";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.CargarVistaFormulario);
             ((System.ComponentModel.ISupportInitialize)(this.preguntasGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

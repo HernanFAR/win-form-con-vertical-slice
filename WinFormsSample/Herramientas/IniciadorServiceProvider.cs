@@ -5,14 +5,11 @@ namespace WinFormsSample.Herramientas
 {
     public class IniciadorServiceProvider
     {
-        public static readonly Lazy<IServiceProvider> ProveedorLazy = new Lazy<IServiceProvider>(() =>
-        {
-            var servicios = new ServiceCollection();
-
-            servicios.AgregarDependenciasCapaLogica();
-
-            return servicios.BuildServiceProvider();
-        });
+        public static readonly Lazy<IServiceProvider> ProveedorLazy = new Lazy<IServiceProvider>(
+            () => new ServiceCollection()
+            .AgregarDependenciasCapaLogica()
+            .AgregarDependenciasCorteComun()
+            .BuildServiceProvider());
 
     }
 }

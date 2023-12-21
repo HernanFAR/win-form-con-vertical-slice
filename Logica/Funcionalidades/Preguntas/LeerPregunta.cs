@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,11 +21,12 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
 
     public class PreguntaDTO
     {
-        public PreguntaDTO(Guid id, string titulo, string detalle)
+        public PreguntaDTO(Guid id, string titulo, string detalle, bool resuelta)
         {
             Id = id;
             Titulo = titulo;
             Detalle = detalle;
+            Resuelta = resuelta;
         }
 
         public Guid Id { get; }
@@ -32,7 +34,7 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
         public string Titulo { get; }
 
         public string Detalle { get; }
-
+        public bool Resuelta { get; }
     }
 
     public class LeerPreguntasDTO
@@ -73,15 +75,22 @@ namespace Logica.Funcionalidades.Preguntas.LeerPreguntas
 
     public class LeerPreguntasRepositorio : ILeerPreguntasRepositorio
     {
+        private readonly IDbConnection _connection;
+
+        public LeerPreguntasRepositorio(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<Respuesta<LeerPreguntasDTO>> LeerTodas(CancellationToken cancellationToken)
         {
             return new LeerPreguntasDTO(new[]
             {
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 1", "Detalle 1"),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 2", "Detalle 2"),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 3", "Detalle 3"),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 4", "Detalle 4"),
-                new PreguntaDTO(Guid.NewGuid(), "Titulo 5", "Detalle 5"),
+                new PreguntaDTO(Guid.NewGuid(), "Titulo 1", "Detalle 1", true),
+                new PreguntaDTO(Guid.NewGuid(), "Titulo 2", "Detalle 2", false),
+                new PreguntaDTO(Guid.NewGuid(), "Titulo 3", "Detalle 3", true),
+                new PreguntaDTO(Guid.NewGuid(), "Titulo 4", "Detalle 4", false),
+                new PreguntaDTO(Guid.NewGuid(), "Titulo 5", "Detalle 5", true),
             });
         }
     }
